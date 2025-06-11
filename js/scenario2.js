@@ -268,9 +268,18 @@ function loadScene(sceneId) {
 
     // Update HTML elements with scene data
     sceneTitle.textContent = scene.title;
-    sceneImage.src = scene.image;
-    sceneImage.alt = scene.title; // Good for accessibility
-    sceneText.innerHTML = scene.text.replace(/\n/g, '<br><br>'); // Replace newlines with <br> for HTML rendering
+    sceneText.innerHTML = scene.text.replace(/\n/g, '<br><br>');
+
+    // Image show/hide logic (match scenario1.js)
+    if (scene.image) {
+        sceneImage.src = scene.image;
+        sceneImage.alt = scene.title;
+        sceneImage.classList.remove('hidden');
+    } else {
+        sceneImage.src = "";
+        sceneImage.alt = "";
+        sceneImage.classList.add('hidden');
+    }
 
     // Clear previous choices
     choicesContainer.innerHTML = '';
