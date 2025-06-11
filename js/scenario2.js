@@ -231,15 +231,28 @@ const scenes = {
     }
 };
 
-// --- CORE LOGIC (Same as previous scenarios, ensures it's self-contained) ---
-let currentSceneId = "start"; // Start with the first scene for this scenario
+// --- CORE LOGIC ---
+let currentSceneId = "start"; // Start with the first scene
 let visitedScenes = new Set(); // Track visited scenes for progress
+
+// Function to toggle info hub visibility
+function toggleInfoHub() {
+    const infoHub = document.getElementById('info-hub');
+    const infoHubToggle = document.getElementById('info-hub-toggle');
+
+    if (infoHub.classList.contains('hidden')) {
+        infoHub.classList.remove('hidden');
+        infoHubToggle.textContent = '📚 Close Info';
+    } else {
+        infoHub.classList.add('hidden');
+        infoHubToggle.textContent = '📚 Info Hub';
+    }
+}
 
 function updateProgress() {
     visitedScenes.add(currentSceneId);
     const totalScenes = Object.keys(scenes).length;
     const percent = Math.round((visitedScenes.size / totalScenes) * 100);
-    // Update the new progress bar and label at the bottom
     const bar = document.getElementById('progress-bar-inner');
     const label = document.getElementById('progress-label');
     if (bar) bar.style.width = percent + '%';
@@ -253,38 +266,30 @@ function loadScene(sceneId) {
         return;
     }
 
-    // Get references to HTML elements
-    const sceneTitle = document.getElementById("scene-title");
-    const sceneImage = document.getElementById("scene-image");
-    const sceneText = document.getElementById("scene-text");
-    const choicesContainer = document.getElementById("choices-container");
-    const reflectionPrompt = document.getElementById("reflection-prompt");
-    const restartButton = document.getElementById("restart-button");
-    const backToMenuButton = document.getElementById("back-to-menu-button");
-
-    // Update current scene and progress
     currentSceneId = sceneId;
     updateProgress();
 
-    // Update HTML elements with scene data
-    sceneTitle.textContent = scene.title;
-    sceneText.innerHTML = scene.text.replace(/\n/g, '<br><br>');
+    // Get reference to the image element
+    const sceneImage = document.getElementById("scene-image");
 
-    // Image show/hide logic (match scenario1.js)
-    if (scene.image) {
+    // Update scene content
+    document.getElementById("scene-title").textContent = scene.title;
+    document.getElementById("scene-text").innerHTML = scene.text.replace(/\n/g, '<br><br>');
+
+    // Image display logic (robust and safe)
+    if (scene.image && scene.image.trim() !== "") {
         sceneImage.src = scene.image;
         sceneImage.alt = scene.title;
         sceneImage.classList.remove('hidden');
     } else {
-        sceneImage.src = "";
+        sceneImage.removeAttribute("src");
         sceneImage.alt = "";
         sceneImage.classList.add('hidden');
     }
 
-    // Clear previous choices
+    // Update choices
+    const choicesContainer = document.getElementById("choices-container");
     choicesContainer.innerHTML = '';
-
-    // Add new choices if they exist
     if (scene.choices && scene.choices.length > 0) {
         scene.choices.forEach(choice => {
             const button = document.createElement("button");
@@ -300,7 +305,8 @@ function loadScene(sceneId) {
         choicesContainer.classList.add('hidden');
     }
 
-    // Update reflection prompt
+    // Update reflection
+    const reflectionPrompt = document.getElementById("reflection-prompt");
     if (scene.reflection) {
         reflectionPrompt.innerHTML = `<em>Reflection: ${scene.reflection}</em>`;
         reflectionPrompt.classList.remove('hidden');
@@ -308,17 +314,19 @@ function loadScene(sceneId) {
         reflectionPrompt.classList.add('hidden');
     }
 
-    // Show/hide end buttons based on 'isEnding' property
+    // Handle ending buttons
+    const restartBtn = document.getElementById("restart-button");
+    const backBtn = document.getElementById("back-to-menu-button");
     if (scene.isEnding) {
-        restartButton.classList.remove('hidden');
-        backToMenuButton.classList.remove('hidden');
-        restartButton.onclick = () => { playButtonClickSFX(); loadScene('start'); };
-        backToMenuButton.onclick = () => { playButtonClickSFX(); window.location.href = '../index.html'; };
+        restartBtn.classList.remove('hidden');
+        backBtn.classList.remove('hidden');
+        restartBtn.onclick = () => { playButtonClickSFX(); loadScene('start'); };
+        backBtn.onclick = () => { playButtonClickSFX(); window.location.href = '../index.html'; };
     } else {
-        restartButton.classList.add('hidden');
-        backToMenuButton.classList.add('hidden');
-        restartButton.onclick = null;
-        backToMenuButton.onclick = null;
+        restartBtn.classList.add('hidden');
+        backBtn.classList.add('hidden');
+        restartBtn.onclick = null;
+        backBtn.onclick = null;
     }
 
     window.scrollTo(0, 0);
@@ -326,21 +334,10 @@ function loadScene(sceneId) {
 
 document.addEventListener("DOMContentLoaded", () => {
     loadScene(currentSceneId);
-    // Info hub toggle logic
+
+    // Info hub toggle setup
     const infoHubToggle = document.getElementById('info-hub-toggle');
-    const infoHub = document.getElementById('info-hub');
-    const infoHubClose = document.getElementById('info-hub-close');
-    if (infoHubToggle && infoHub && infoHubClose) {
-        infoHubToggle.addEventListener('click', () => {
-            infoHub.classList.add('active');
-        });
-        infoHubClose.addEventListener('click', () => {
-            infoHub.classList.remove('active');
-        });
-        document.addEventListener('mousedown', (e) => {
-            if (infoHub.classList.contains('active') && !infoHub.contains(e.target) && e.target !== infoHubToggle) {
-                infoHub.classList.remove('active');
-            }
-        });
+    if (infoHubToggle) {
+        infoHubToggle.addEventListener('click', toggleInfoHub);
     }
 });
