@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scenario 2: Data Privacy & The "Free" Game</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <div class="container" id="scenario-container">
+        <div class="scenario-toolbar">
+            <a href="../index.html" class="home-icon" title="Home">
+                <img src="../assets/icons/home.jpg" alt="Home" style="height:28px;width:28px;vertical-align:middle;">
+            </a>
+            <button id="info-hub-toggle" class="info-icon" title="Information Hub">
+                📚 Information Hub
+            </button>
+        </div>
+        <h2 id="scene-title"></h2>
+        <img id="scene-image" src="" alt="" class="scene-image">
+        <p id="scene-text"></p>
+        <div id="choices-container" class="choices-container">
+            <!-- Choice buttons will be injected here by JavaScript -->
+        </div>
+        <div id="reflection-prompt" class="reflection-prompt">
+            <!-- Reflection prompts will be injected here by JavaScript -->
+        </div>
+        <button id="restart-button" class="hidden">Restart Scenario</button>
+        <button id="back-to-menu-button" class="hidden">Back to Main Menu</button>
+        <div class="progress-bar-row">
+            <div class="progress-bar-outer short">
+                <div id="progress-bar-inner" class="progress-bar-inner"></div>
+            </div>
+            <span id="progress-label" class="progress-label-inline">0%</span>
+        </div>
+    </div>
+
+    <!-- Info Hub Panel (slide-in, fixed right, scrollable, with sidebar) -->
+    <div id="info-hub" class="info-hub">
+        <button class="close-btn" id="info-hub-close" title="Close Info Hub">&times;</button>
+        <div class="info-hub-layout">
+            <nav class="info-hub-nav">
+                <ul>
+                    <li><a href="#price-of-free">Price of Free</a></li>
+                    <li><a href="#real-world">Real-world Example</a></li>
+                    <li><a href="#protect-yourself">Protect Yourself</a></li>
+                    <li><a href="#resources">Resources</a></li>
+                </ul>
+            </nav>
+            <div class="info-content">
+                <h2 class="info-hub-title">Information Hub</h2>
+                <section id="price-of-free">
+                    <h3>Price of Free</h3>
+                    <p>Many "free" apps and services follow a business model where the user is not the customer, but the product. Instead of charging money, these companies collect vast amounts of data about your activities, preferences, and personal information.</p>
+                </section>
+                <section id="real-world">
+                    <h3>Real-world Example: The Weather App Scandal</h3>
+                    <p>In recent years, numerous popular weather applications on both iOS and Android have been found to be collecting and selling their users' precise location data. An investigation into The Weather Channel app, for instance, revealed it was sending its users' minute-by-minute location data to third parties for commercial purposes, including hedge fund analysis and targeted advertising. This happened in the background, often without the users' full awareness of how their sensitive data was being monetized.</p>
+                </section>
+                <section id="protect-yourself">
+                    <h3>How to Protect Yourself</h3>
+                    <p>Taking control of your data often starts with your phone's settings. Regularly reviewing which apps have access to your information is a crucial step in protecting your digital privacy. You have the power to grant or deny permissions on an app-by-app basis.</p>
+                </section>
+                <section id="resources">
+                    <h3>Recommended Resources</h3>
+                    <ul>
+                        <li><a href="https://www.oaic.gov.au/privacy/your-privacy-rights/social-media-and-online-privacy/mobile-devices" target="_blank">OAIC - Mobile app privacy</a></li>
+                        <li><a href="https://epic.org/" target="_blank">Electronic Privacy Information Center (EPIC)</a></li>
+                        <li><a href="https://www.youtube.com/watch?v=tkY9dhOF2WU&ab_channel=TheHatedOne" target="_blank">Data Privacy Explained (YouTube)</a></li>
+                    </ul>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Global Audio element for background music -->
+    <audio id="global-bgm" src="../assets/audio/global_bgm.mp3" loop muted></audio>
+    <!-- Global Sound toggle button -->
+    <button id="toggle-global-sound-button" class="sound-toggle-button">🔇 Sound Off</button>
+
+    <!-- Link to the global JavaScript file for sound control -->
+    <script src="../js/main.js"></script>
+    <!-- Link to the specific scenario's JavaScript -->
+    <script src="../js/scenario2.js"></script>
+    <script>
+    // Info Hub Show/Hide Logic
+    const infoHub = document.getElementById('info-hub');
+    const infoHubToggle = document.getElementById('info-hub-toggle');
+    const infoHubClose = document.getElementById('info-hub-close');
+    infoHubToggle.addEventListener('click', () => {
+        infoHub.classList.add('active');
+    });
+    infoHubClose.addEventListener('click', () => {
+        infoHub.classList.remove('active');
+    });
+    document.addEventListener('mousedown', (e) => {
+        if (infoHub.classList.contains('active') && !infoHub.contains(e.target) && e.target !== infoHubToggle) {
+            infoHub.classList.remove('active');
+        }
+    });
+    </script>
+</body>
+</html>

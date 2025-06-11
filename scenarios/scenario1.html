@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scenario 1: The Algorithm's Choice</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <div class="container" id="scenario-container">
+        <div class="scenario-toolbar">
+            <a href="../index.html" class="home-icon" title="Home">
+                <img src="../assets/icons/home.jpg" alt="Home" style="height:28px;width:28px;vertical-align:middle;">
+            </a>
+            <button id="info-hub-toggle" class="info-icon" title="Information Hub">
+                📚 Information Hub
+            </button>
+        </div>
+        <h2 id="scene-title"></h2>
+        <img id="scene-image" src="" alt="" class="scene-image">
+        <p id="scene-text"></p>
+        <div id="choices-container" class="choices-container">
+            <!-- Choice buttons will be injected here by JavaScript -->
+        </div>
+        <div id="reflection-prompt" class="reflection-prompt">
+            <!-- Reflection prompts will be injected here by JavaScript -->
+        </div>
+        <button id="restart-button" class="hidden" onclick="loadScene('start')">Restart Scenario</button>
+        <button id="back-to-menu-button" class="hidden" onclick="window.location.href='../index.html'">Back to Main Menu</button>
+        <div class="progress-bar-row">
+            <div class="progress-bar-outer short">
+                <div id="progress-bar-inner" class="progress-bar-inner"></div>
+            </div>
+            <span id="progress-label" class="progress-label-inline">0%</span>
+        </div>
+    </div>
+
+    <!-- Info Hub Panel (slide-in, fixed right, scrollable, with sidebar) -->
+    <div id="info-hub" class="info-hub">
+        <button class="close-btn" id="info-hub-close" title="Close Info Hub">&times;</button>
+        <div class="info-hub-layout">
+            <nav class="info-hub-nav">
+                <ul>
+                    <li><a href="#about-bias">About Algorithmic Bias</a></li>
+                    <li><a href="#real-world">Real-world Example</a></li>
+                    <li><a href="#footprint">Digital Footprint</a></li>
+                    <li><a href="#resources">Resources</a></li>
+                </ul>
+            </nav>
+            <div class="info-content">
+                <h2 class="info-hub-title">Information Hub</h2>
+                <section id="about-bias">
+                    <h3>About Algorithmic Bias</h3>
+                    <p>Algorithmic bias occurs when AI systems make decisions that systematically disadvantage certain groups of people. This scenario explores how AI can perpetuate existing social inequalities.</p>
+                </section>
+                <section id="real-world">
+                    <h3>Real-world Example: Amazon's AI Recruiting Tool</h3>
+                    <p>In 2018, Amazon had to scrap an AI recruiting tool that showed bias against women. The system was trained on resumes submitted over a 10-year period, which were mostly from men, leading it to favor male candidates.</p>
+                </section>
+                <section id="footprint">
+                    <h3>Digital Footprint Impact</h3>
+                    <p>Your digital footprint - including your online activities, social media presence, and digital interactions - can significantly influence how AI systems perceive and categorize you, affecting opportunities in education, employment, and more.</p>
+                </section>
+                <section id="resources">
+                    <h3>Recommended Resources</h3>
+                    <ul>
+                        <li><a href="https://www.esafety.gov.au/" target="_blank">eSafety Commissioner </a></li>
+                        <li><a href="https://www.reuters.com/sustainability/society-equity/comment-business-leaders-risk-sleepwalking-towards-ai-misuse-2024-11-19/?utm_source=chatgpt.com" target="_blank">Reuters Comment on AI Misuse</a></li>
+                        <li><a href="https://www.youtube.com/watch?v=59bMh59JQDo" target="_blank">Algorithmic Bias Explained (YouTube)</a></li>
+                    </ul>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Global Audio element for background music -->
+    <audio id="global-bgm" src="../assets/audio/global_bgm.mp3" loop muted></audio>
+    <!-- Global Sound toggle button -->
+    <button id="toggle-global-sound-button" class="sound-toggle-button">🔇 Sound Off</button>
+
+    <!-- Link to the global JavaScript file for sound control -->
+    <script src="../js/main.js"></script>
+    <!-- Link to the specific scenario's JavaScript -->
+    <script src="../js/scenario1.js"></script>
+    <script>
+    // Info Hub Show/Hide Logic
+    const infoHub = document.getElementById('info-hub');
+    const infoHubToggle = document.getElementById('info-hub-toggle');
+    const infoHubClose = document.getElementById('info-hub-close');
+    infoHubToggle.addEventListener('click', () => {
+        infoHub.classList.add('active');
+    });
+    infoHubClose.addEventListener('click', () => {
+        infoHub.classList.remove('active');
+    });
+    document.addEventListener('mousedown', (e) => {
+        if (infoHub.classList.contains('active') && !infoHub.contains(e.target) && e.target !== infoHubToggle) {
+            infoHub.classList.remove('active');
+        }
+    });
+    // Progress bar update for inline label
+    function updateProgressBar(percent) {
+        document.getElementById('progress-bar-inner').style.width = percent + '%';
+        document.getElementById('progress-label').textContent = percent + '%';
+    }
+    </script>
+</body>
+</html>

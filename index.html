@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethical Crossroads: Navigating the Digital World</title>
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Ethical Crossroads: Navigating the Digital World</h1>
+
+
+        <p>Welcome to the Digital Ethics Simulator. In this interactive experience, you'll face real-world dilemmas about technology, data, and digital decisions. Your choices will shape the story and reveal the complex ethical landscape of our digital age.</p>
+        <p><strong>Choose your story to begin!</strong></p>
+
+        <div class="scenarios-container">
+
+            <div class="scenario-card" onclick="playSFXThenGo('scenarios/scenario1.html')">
+                <div class="scenario-header-row">
+                    <i class="fas fa-brain scenario-icon"></i>
+                    <h3 class="scenario-title">Scenario 1: The Algorithm's Choice</h3>
+                </div>
+                <p class="scenario-description">Can you trust an AI to decide your future?</p>
+            </div>
+
+            <div class="scenario-card" onclick="playSFXThenGo('scenarios/scenario2.html')">
+                <div class="scenario-header-row">
+                    <i class="fas fa-lock scenario-icon"></i>
+                    <h3 class="scenario-title">Scenario 2: The 'Free' Game</h3>
+                </div>
+                <p class="scenario-description">What's the real price you pay for a free app?</p>
+            </div>
+
+            <div class="scenario-card" onclick="playSFXThenGo('scenarios/scenario3.html')">
+                <div class="scenario-header-row">
+                    <i class="fas fa-comments scenario-icon"></i>
+                    <h3 class="scenario-title">Scenario 3: The Bystander</h3>
+                </div>
+                <p class="scenario-description">You see cyberbullying in a group chat. What do you do?</p>
+            </div>
+        </div>
+
+        <script>
+        // Button click SFX for home page only
+        // This function now works perfectly with the new clickable cards.
+        function playSFXThenGo(url) {
+            const sfx = new Audio('assets/audio/button_click.mp3');
+            sfx.volume = 0.5;
+            sfx.play().catch(()=>{});
+            setTimeout(() => { window.location.href = url; }, 120); // Short delay for SFX
+        }
+        </script>
+        <p class="acknowledgement" style="text-align:center; color:#888; font-size:0.95em; margin-top:40px;">
+            Acknowledgement: All images used in this simulator were created using AI tools
+        </p>
+    </div>
+</body>
+</html>
